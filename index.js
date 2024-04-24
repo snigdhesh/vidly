@@ -40,4 +40,13 @@ app.post('/api/genres', (req, res) => {
     res.send(genre)
  })
 
+   //Update a genre object
+app.post('/api/genres/:id', (req, res) => {
+    const genre = genres.find(c => c.id === parseInt(req.params.id))
+    if (!genre) return res.status(404).send('The genre with the given ID was not found.')
+    genre.name = req.body.name
+    genre.description = req.body.description
+    res.send(genre)
+ })
+
 app.listen(3000, () => {console.log("listening on port 3000..")} )
