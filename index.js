@@ -3,6 +3,7 @@ const express = require('express') //This returns a function
 const app = express() //This returns an object
 
 app.use(express.static('./public')) //This is a middleware that serves static files from the public directory
+app.use(express.json()) //This is a middleware that parses incoming requests with JSON payloads and is based on body-parser
 
 const genres = [
     { id: 1, name: 'Action', description: 'Movies with lots of action and excitement.' },
@@ -25,6 +26,17 @@ app.delete('/api/genres/:id', (req, res) => {
     if (!genre) return res.status(404).send('The genre with the given ID was not found.')
     const index = genres.indexOf(genre)
     genres.splice(index, 1)
+    res.send(genre)
+ })
+
+  //Add a genre object
+app.post('/api/genres', (req, res) => {
+    const genre = {
+        id: genres.length + 1,
+        name: req.body.name,
+        description: req.body.description
+    }
+    genres.push(genre)
     res.send(genre)
  })
 
