@@ -1,52 +1,12 @@
 const express = require('express') //This returns a function
-
+const genres = require('./routes/genres') //This returns an object
 const app = express() //This returns an object
 
 app.use(express.static('./public')) //This is a middleware that serves static files from the public directory
 app.use(express.json()) //This is a middleware that parses incoming requests with JSON payloads and is based on body-parser
 
-const genres = [
-    { id: 1, name: 'Action', description: 'Movies with lots of action and excitement.' },
-    { id: 2, name: 'Comedy', description: 'Movies that make you laugh and smile.' },
-    { id: 3, name: 'Drama', description: 'Movies that evoke strong emotions and tell compelling stories.' },
-    { id: 4, name: 'Thriller', description: 'Movies that keep you on the edge of your seat with suspense.' },
-    { id: 5, name: 'Sci-Fi', description: 'Movies that explore futuristic concepts and scientific possibilities.' }
-];
+app.use('/api/genres', genres) //This is a middleware that uses the genres route
 
 app.get('/', (req, res) => {res.send() })
-
-//Get list of genre objects
-app.get('/api/genres', (req, res) => {
-    res.send(genres)
- })
-
- //Delete a genre object
-app.delete('/api/genres/:id', (req, res) => {
-    const genre = genres.find(c => c.id === parseInt(req.params.id))
-    if (!genre) return res.status(404).send('The genre with the given ID was not found.')
-    const index = genres.indexOf(genre)
-    genres.splice(index, 1)
-    res.send(genre)
- })
-
-  //Add a genre object
-app.post('/api/genres', (req, res) => {
-    const genre = {
-        id: genres.length + 1,
-        name: req.body.name,
-        description: req.body.description
-    }
-    genres.push(genre)
-    res.send(genre)
- })
-
-   //Update a genre object
-app.post('/api/genres/:id', (req, res) => {
-    const genre = genres.find(c => c.id === parseInt(req.params.id))
-    if (!genre) return res.status(404).send('The genre with the given ID was not found.')
-    genre.name = req.body.name
-    genre.description = req.body.description
-    res.send(genre)
- })
 
 app.listen(3000, () => {console.log("listening on port 3000..")} )
