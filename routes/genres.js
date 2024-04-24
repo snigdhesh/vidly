@@ -1,4 +1,5 @@
 const express = require('express')
+const Joi = require('joi') //This returns a class
 const router = express.Router();
 
 const genres = [
@@ -25,6 +26,10 @@ router.delete('/:id', (req, res) => {
 
   //Add a genre object
 router.post('/', (req, res) => {
+    const result = validateGenre(req.body);
+    
+    if(result.error) return res.status(400).send(result.error.details[0].message)
+
     const genre = {
         id: genres.length + 1,
         name: req.body.name,
@@ -42,5 +47,14 @@ router.put('/:id', (req, res) => {
     genre.description = req.body.description
     res.send(genre)
  })
+
+ const validateGenre = (genre) => {
+    const schema = Joi.object({
+        name: Joi.string().min(3).required(),
+        description: Joi.string().min(3).required()
+    })
+    
+    return schema.validate(genre) //This returns an object
+ }
 
  module.exports = router;
