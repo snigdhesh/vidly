@@ -1,10 +1,13 @@
 const express = require('express') //This returns a function
-const genres = require('./routes/genres') //This returns an object
-const home = require('./routes/home') //This returns an object
 const app = express() //This returns an object
 const auth = require('./middleware/auth') //This returns a function
 const database = require('mongoose') //This returns an object
 const config = require('config') //This returns an object
+
+//Routes
+const genres = require('./routes/genres') //This returns an object
+const home = require('./routes/home') //This returns an object
+const customers = require('./routes/customers') //This returns an object
 
 //connect to database when application starts
 database.connect(config.get('datasource.url'))
@@ -15,6 +18,7 @@ app.use(express.static('./public')) //This is a middleware that serves static fi
 app.use(express.json()) //This is a middleware that parses incoming requests with JSON payloads and is based on body-parser
 app.use(auth) //This is example of a custom middleware
 app.use('/api/genres', genres) //This is a middleware that uses the genres route
+app.use('/api/customers', customers) //This is a middleware that uses the customers route
 app.use('/', home) //This is a middleware that uses the home route
 
 const port = process.env.PORT || 3000
