@@ -48,8 +48,16 @@ const updateAuthor = async (courseId) => {
     console.log("Author updated successfully: ",course);
 }
 
+const addAuthor = async (courseId, author) => {
+    const course = await Course.findById(courseId);
+    course.authors.push(author);
+    course.save();
+    console.log("Author added successfully: ",course);
+}
+
 module.exports.Course = Course;
 module.exports.createCourse = create;
 module.exports.getCourse = get;
 module.exports.updateAuthor = updateAuthor;
 module.exports.Author = Author;
+module.exports.addAuthor = addAuthor;
