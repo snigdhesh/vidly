@@ -14,20 +14,17 @@ const Author = mongoose.model('Author',authorSchema);
 //create course schema
 const course = new mongoose.Schema({
     name: {type: String,required: true},
-    author: {
-        type: authorSchema, //reference to author schema
-        required: true
-    } 
+    authors: [authorSchema]
 });
 
 
 //create a class
 const Course = mongoose.model('Course',course);
 
-const create = async (name,author) => {
+const create = async (name,authors) => {
     const course = new Course({
         name,
-        author
+        authors
     })
 
     const result = await course.save()
@@ -55,3 +52,4 @@ module.exports.Course = Course;
 module.exports.createCourse = create;
 module.exports.getCourse = get;
 module.exports.updateAuthor = updateAuthor;
+module.exports.Author = Author;
