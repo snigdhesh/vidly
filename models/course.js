@@ -55,9 +55,17 @@ const addAuthor = async (courseId, author) => {
     console.log("Author added successfully: ",course);
 }
 
+const removeAuthor = async (courseId, authorId) => {
+    const course = await Course.findById(courseId);
+    course.authors.pull(authorId);
+    course.save();
+    console.log("Author removed successfully: ",course);
+}
+
 module.exports.Course = Course;
 module.exports.createCourse = create;
 module.exports.getCourse = get;
 module.exports.updateAuthor = updateAuthor;
 module.exports.Author = Author;
 module.exports.addAuthor = addAuthor;
+module.exports.removeAuthor = removeAuthor;

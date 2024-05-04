@@ -4,7 +4,7 @@ const app = express();
 const config = require('config'); // Import config package
 const mongoose = require('mongoose'); // Import mongoose package
 
-const {Author,createCourse,addAuthor} = require('./models/course'); // Import Course model and createCourse function
+const {Author,createCourse,addAuthor,removeAuthor} = require('./models/course'); // Import Course model and createCourse function
 
 
 mongoose.connect(config.datasource.url).then(() => {
@@ -21,7 +21,9 @@ mongoose.connect(config.datasource.url).then(() => {
 //getCourse();
 //updateAuthor('66367fc46a32fab4ec75bb7a');//Upate author name with courseId, we can't update author name directly as it's a child, we need to update author name using courseId
 
-addAuthor('66368455633f6b45f409f80a', new Author({ name: 'Jane' }));
+//addAuthor('66368455633f6b45f409f80a', new Author({ name: 'Jane' }));
+
+removeAuthor('66368455633f6b45f409f80a','6636851d4b05d30c75cc60b9')
 
 app.listen(config.app.port, () => {
     console.log(`Server is running on port ${config.app.port}..`);
