@@ -22,5 +22,11 @@ const create = async (name,author) => {
     console.log("Course created successfully: ",result)
 };
 
+const get = async () => {
+    const courses = await Course.find().populate('author','name bio -_id').select('name author')
+    console.log(courses);
+}
+
 module.exports.Course = Course;
 module.exports.createCourse = create;
+module.exports.getCourse = get;
