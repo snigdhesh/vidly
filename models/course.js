@@ -14,7 +14,10 @@ const Author = mongoose.model('Author',authorSchema);
 //create course schema
 const course = new mongoose.Schema({
     name: {type: String,required: true},
-    author: authorSchema //reference to author schema
+    author: {
+        type: authorSchema, //reference to author schema
+        required: true
+    } 
 });
 
 
