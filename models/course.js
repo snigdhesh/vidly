@@ -36,10 +36,15 @@ const get = async () => {
     console.log(courses);
 }
 
-const updateAuthor = async (id) => {
-    const course = await Course.findById(id);
-    course.author.name = 'Naga Vadlapudi';
-    course.save();
+const updateAuthor = async (courseId) => {
+    //With this approach, we dont' have to get object > update it > save it. We can directly update it.
+    const course = await Course.updateOne({_id: courseId},
+        {
+            $set: {
+                'author.name': 'John Doe'
+            }
+        });
+    
     console.log("Author updated successfully: ",course);
 }
 
