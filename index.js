@@ -8,6 +8,7 @@ const config = require('config') //This returns an object
 const genres = require('./routes/genres') //This returns an object
 const home = require('./routes/home') //This returns an object
 const customers = require('./routes/customers') //This returns an object
+const movies = require('./routes/movies') //This returns an object
 
 //connect to database when application starts
 database.connect(config.get('datasource.url'))
@@ -19,6 +20,7 @@ app.use(express.json()) //This is a middleware that parses incoming requests wit
 app.use(auth) //This is example of a custom middleware
 app.use('/api/genres', genres) //This is a middleware that uses the genres route
 app.use('/api/customers', customers) //This is a middleware that uses the customers route
+app.use('/api/movies', movies) //This is a middleware that uses the movies route
 app.use('/', home) //This is a middleware that uses the home route
 
 const port = process.env.PORT || 3000
