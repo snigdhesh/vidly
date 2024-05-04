@@ -40,8 +40,8 @@ const updateAuthor = async (courseId) => {
     //With this approach, we dont' have to get object > update it > save it. We can directly update it.
     const course = await Course.updateOne({_id: courseId},
         {
-            $set: {
-                'author.name': 'John Doe'
+            $unset: {
+                'author': ''
             }
         });
     
