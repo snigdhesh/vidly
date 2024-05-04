@@ -1,13 +1,22 @@
-const mongoose = require('mongoose')
+const mongoose = require('mongoose');
 
-//create a schema
+
+//create author schema
+const authorSchema = new mongoose.Schema({
+    name: String,
+    bio: String
+});
+
+//create author class
+const Author = mongoose.model('Author',authorSchema);
+
+
+//create course schema
 const course = new mongoose.Schema({
     name: {type: String,required: true},
-    author: {
-        type: mongoose.Schema.Types.ObjectId,
-        ref: 'Author'
-    }
+    author: authorSchema //reference to author schema
 });
+
 
 //create a class
 const Course = mongoose.model('Course',course);
@@ -27,6 +36,14 @@ const get = async () => {
     console.log(courses);
 }
 
+const updateAuthor = async (id) => {
+    const course = await Course.findById(id);
+    course.author.name = 'Naga Vadlapudi';
+    course.save();
+    console.log("Author updated successfully: ",course);
+}
+
 module.exports.Course = Course;
 module.exports.createCourse = create;
 module.exports.getCourse = get;
+module.exports.updateAuthor = updateAuthor;
