@@ -24,6 +24,10 @@ router.post('/', async (req, res) => {
         }
     })
 
+    //We have two save methods here, one for rental and one for movie
+    //If we want to save both rental and movie, we need to use transaction
+    //Cause if we save rental and movie and if movie save fails, we need to rollback rental save
+    //Transactions are not supported by mongoose, hence we need to use two phase commit protocol : This is an advanced concept, do some research to learn more
     const result = await rental.save()
     movie.numberInStock--;
     movie.save();
