@@ -10,6 +10,7 @@ Node.js application
 | **npm i joi**         | For request body validations                                                              |
 | **npm i underscore**  | Popular package for utilities                                                             |
 | **npm i mongoose**    | A library to work with mongodb database - It offers a simple API to perform DB operations |
+| **npm i lodash**    | Powerful util tool. It's an optimized version of 'underscore' package                     |
 
 
 skip() method for pagination in mongo database
