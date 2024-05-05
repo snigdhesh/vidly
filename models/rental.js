@@ -1,13 +1,15 @@
 const express = require('express')
+const mongoose = require('mongoose')
+const Joi = require('joi')
 
 
 //create customer schema
 //We are not using existing customer schema, cause we want to store only name, isGold and phone in rental object
-const customerSchema = new mongoose.Schema({
+const customerSchema2 = new mongoose.Schema({
     name: {
         type: String,
         required: true,
-        minlength: 5,
+        minlength: 3,
         maxlength: 50
     },
     isGold: {
@@ -24,7 +26,7 @@ const customerSchema = new mongoose.Schema({
 
 //create movie schema
 //We are not using existing movie schema, cause we want to store only title and dailyRentalRate in rental object
-const movieSchema = new mongoose.Schema({
+const movieSchema2 = new mongoose.Schema({
     title: {
         type: String,
         required: true,
@@ -42,11 +44,11 @@ const movieSchema = new mongoose.Schema({
 //create rental schema
 const rentalSchema = new mongoose.Schema({
     customer: {
-        type: customerSchema,
+        type: customerSchema2,
         required: true
     },
     movie: {
-        type: movieSchema,
+        type: movieSchema2,
         required: true
     },
     dateOut: {
@@ -64,10 +66,10 @@ const rentalSchema = new mongoose.Schema({
 })
 
 //create customer class
-const Customer = mongoose.model('Customer', customerSchema)
+const Customer2 = mongoose.model('Customer2', customerSchema2)
 
 //create movie class
-const Movie = mongoose.model('Movie', movieSchema)
+const Movie2 = mongoose.model('Movie2', movieSchema2)
 
 //create rental class
 const Rental = mongoose.model('Rental', rentalSchema)
@@ -81,8 +83,7 @@ const validateRental = (rental) => {
     return schema.validate(rental)
 }
 
-module.exports.Customer = Customer
-module.exports.Movie = Movie
+
 module.exports.Rental = Rental
 module.exports.validateRental = validateRental
 
