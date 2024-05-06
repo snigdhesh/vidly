@@ -1,17 +1,18 @@
 # vidly
 Node.js application
 
-| Command               | Description                                                                               |
-| -----------------     | ---------------------------------------------------------------------                     |
-| **npm init --yes**    | Creates package.json with default values                                                  |
-| **npm i express**     | A framework for node.js applications                                                      |
-| **npm i nodemon**     | This is a package that enables auto recompiling, everytime you make a code change         |
-| **npm i config**      | For managing config in different envs, like dev, test, prod                               |
-| **npm i joi**         | For request body validations                                                              |
-| **npm i underscore**  | Popular package for utilities                                                             |
-| **npm i mongoose**    | A library to work with mongodb database - It offers a simple API to perform DB operations |
-| **npm i lodash**      | Powerful util tool. It's an optimized version of 'underscore' package                     |
-| **npm i bcrypt**      | To encrypt password to save to database                                                   |
+| Command                 | Description                                                                               |
+| -----------------       | ---------------------------------------------------------------------                     |
+| **npm init --yes**      | Creates package.json with default values                                                  |
+| **npm i express**       | A framework for node.js applications                                                      |
+| **npm i nodemon**       | This is a package that enables auto recompiling, everytime you make a code change         |
+| **npm i config**        | For managing config in different envs, like dev, test, prod                               |
+| **npm i joi**           | For request body validations                                                              |
+| **npm i underscore**    | Popular package for utilities                                                             |
+| **npm i mongoose**      | A library to work with mongodb database - It offers a simple API to perform DB operations |
+| **npm i lodash**        | Powerful util tool. It's an optimized version of 'underscore' package                     |
+| **npm i bcrypt**        | To encrypt password to save to database                                                   |
+| **npm i jsonwebtoken**  | To generate json web tokens                                                               |
 
 
 skip() method for pagination in mongo database
