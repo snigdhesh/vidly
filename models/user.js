@@ -26,7 +26,8 @@ const userSchema = new mongoose.Schema({
     date: {
         type: Date,
         default: Date.now
-    }
+    },
+    isAdmin: Boolean
 })
 
 //We can't use arrow function here because we need to use 'this' keyword
@@ -35,7 +36,7 @@ const userSchema = new mongoose.Schema({
 //But here, 'this' refers to the object that is calling this function
 userSchema.methods.generateAuthToken = function() {
     //jwt.sign() takes two arguments, response payload and private key
-    const token = jwt.sign({ _id: this._id}, config.get('privateKey'));
+    const token = jwt.sign({ _id: this._id, isAdmin: this.isAdmin}, config.get('privateKey'));
     return token;
 }
 
@@ -47,7 +48,8 @@ function validateUser(user) {
     const schema = Joi.object({
         name: Joi.string().min(3).required(),
         email: Joi.string().min(6).required().email(),
-        password: Joi.string().min(6).required()
+        password: Joi.string().min(6).required(),
+        isAdmin: Joi.boolean()
     })
 
     return schema.validate(user)

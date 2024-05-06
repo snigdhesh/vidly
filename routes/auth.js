@@ -1,12 +1,14 @@
+//Auth API
+
 const express = require('express')
 const lodash = require('lodash')
 const router = express.Router()
 const {User} = require('../models/user')
 const bcrypt = require('bcrypt')
 const Joi = require('joi')
-const jwt = require('jsonwebtoken')
-const config = require('config')
 
+
+//Get list of users
 router.get('/', async (req, res) => {
     try {
         const users = await User.find()
@@ -16,6 +18,8 @@ router.get('/', async (req, res) => {
     }
 })
 
+
+//token generation endpoint
 router.post('/', async (req, res) => {
     const { error } = validate(req.body)
     if (error) return res.status(400).send(error.details[0].message)

@@ -3,12 +3,18 @@ const lodash = require('lodash')
 const router = express.Router()
 const {User, validate} = require('../models/user')
 const bcrypt = require('bcrypt')
+const auth = require('../middleware/auth') //This returns a middleware function
 
+
+router.get('/me',auth,async (req, res) => {
+    const user = await User.findById(req.user._id).select('-password');
+    res.send(user)
+});
 
 router.get('/', async (req, res) => {
     try {
         const users = await User.find()
-        res.send(lodash.map(users, lodash.partialRight(lodash.pick, ['_id', 'name', 'email'])))
+        res.send(lodash.map(users, lodash.partialRight(lodash.pick, ['_id', 'name', 'email','isAdmin'])))
     } catch (err) {
         res.send({ message: err })
     }
@@ -21,7 +27,7 @@ router.post('/', async (req, res) => {
     let user = await User.findOne(lodash.pick(req.body, ['email']));
     if(user) return res.status(400).send('User already registered.')
 
-    user = new User(lodash.pick(req.body, ['name', 'email', 'password']))
+    user = new User(lodash.pick(req.body, ['name', 'email', 'password','isAdmin']))
 
     const salt = await bcrypt.genSalt(10);
     user.password = await bcrypt.hash(user.password, salt);
@@ -29,7 +35,7 @@ router.post('/', async (req, res) => {
     try {
         const savedUser = await user.save()
         const token = user.generateAuthToken();
-        res.header('x-auth-token',token).send(lodash.pick(savedUser, ['_id', 'name', 'email']))
+        res.header('x-auth-token',token).send(lodash.pick(savedUser, ['_id', 'name', 'email','isAdmin']))
     } catch (err) {
         console.log(err)
         res.send({ error: err.message })
