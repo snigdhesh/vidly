@@ -27,8 +27,7 @@ router.post('/', async (req, res) => {
     if(!validPassword) return res.status(400).send('Invalid email or password.');
 
     //If all checks passed, generate a token and send it to the client.
-    //sign() takes two arguments, payload and private key
-    const token = jwt.sign({ _id: user._id}, config.get('privateKey'));
+    const token = user.generateAuthToken();
     res.send({ access_token: token});
 })
 

@@ -1,5 +1,7 @@
 const mongoose = require('mongoose')
 const Joi = require('joi')
+const jwt = require('jsonwebtoken')
+const config = require('config')
 //crate user schema
 const userSchema = new mongoose.Schema({
     name: {
@@ -26,6 +28,16 @@ const userSchema = new mongoose.Schema({
         default: Date.now
     }
 })
+
+//We can't use arrow function here because we need to use 'this' keyword
+//'this' in lambda function refers to the calling function.
+
+//But here, 'this' refers to the object that is calling this function
+userSchema.methods.generateAuthToken = function() {
+    //jwt.sign() takes two arguments, response payload and private key
+    const token = jwt.sign({ _id: this._id}, config.get('privateKey'));
+    return token;
+}
 
 //create user class
 const User = mongoose.model('User', userSchema)

@@ -4,12 +4,13 @@ const router = express.Router()
 const {User, validate} = require('../models/user')
 const bcrypt = require('bcrypt')
 
+
 router.get('/', async (req, res) => {
     try {
         const users = await User.find()
-        res.json(lodash.map(users, lodash.partialRight(lodash.pick, ['_id', 'name', 'email'])))
+        res.send(lodash.map(users, lodash.partialRight(lodash.pick, ['_id', 'name', 'email'])))
     } catch (err) {
-        res.json({ message: err })
+        res.send({ message: err })
     }
 })
 
@@ -27,9 +28,11 @@ router.post('/', async (req, res) => {
 
     try {
         const savedUser = await user.save()
-        res.json(lodash.pick(savedUser, ['_id', 'name', 'email']))
+        const token = user.generateAuthToken();
+        res.header('x-auth-token',token).send(lodash.pick(savedUser, ['_id', 'name', 'email']))
     } catch (err) {
-        res.json({ message: err })
+        console.log(err)
+        res.send({ error: err.message })
     }
 })
 

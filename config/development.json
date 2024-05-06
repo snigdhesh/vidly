@@ -5,5 +5,5 @@
         "url": "mongodb://127.0.0.1:27017/sandbox",
         "password": "dummy-default: MONGODB doesn't need any password"
     },
-    "privateKey": ""
+    "privateKey": "This value is not used, app picks privateKey value from custom-environment-variables.json file."
 }
