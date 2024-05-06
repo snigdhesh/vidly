@@ -1,6 +1,6 @@
 const express = require('express') //This returns a function
 const app = express() //This returns an object
-const auth = require('./middleware/auth') //This returns a function
+
 const database = require('mongoose') //This returns an object
 const config = require('config') //This returns an object
 
@@ -11,6 +11,7 @@ const customers = require('./routes/customers') //This returns an object
 const movies = require('./routes/movies') //This returns an object
 const rentals = require('./routes/rentals') //This returns an object
 const users = require('./routes/users') //This returns an object
+const auth = require('./routes/auth') //This returns an object
 
 //connect to database when application starts
 database.connect(config.get('datasource.url'))
@@ -19,12 +20,13 @@ database.connect(config.get('datasource.url'))
 
 app.use(express.static('./public')) //This is a middleware that serves static files from the public directory
 app.use(express.json()) //This is a middleware that parses incoming requests with JSON payloads and is based on body-parser
-app.use(auth) //This is example of a custom middleware
+
 app.use('/api/genres', genres) //This is a middleware that uses the genres route
 app.use('/api/customers', customers) //This is a middleware that uses the customers route
 app.use('/api/movies', movies) //This is a middleware that uses the movies route
 app.use('/api/rentals', rentals) //This is a middleware that uses the rentals route
 app.use('/api/users', users) //This is a middleware that uses the users route
+app.use('/api/auth', auth) //This is a middleware that uses the auth route
 app.use('/', home) //This is a middleware that uses the home route
 
 const port = process.env.PORT || 3000
