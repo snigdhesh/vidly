@@ -13,10 +13,18 @@ const rentals = require('./routes/rentals') //This returns an object
 const users = require('./routes/users') //This returns an object
 const auth = require('./routes/auth') //This returns an object
 
+if(!config.get('privateKey')) { //This is a private key that is used to sign the token. This is stored in the config file
+    console.error('FATAL ERROR: Private key is not set');
+    process.exit(1); // 0 indicates success, anything but 0 indicates failure.
+} 
+
+
 //connect to database when application starts
 database.connect(config.get('datasource.url'))
     .then(() => console.log('Connected to MongoDB...'))
     .catch(err => console.error('Could not connect to MongoDB...', err))
+
+
 
 app.use(express.static('./public')) //This is a middleware that serves static files from the public directory
 app.use(express.json()) //This is a middleware that parses incoming requests with JSON payloads and is based on body-parser

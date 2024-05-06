@@ -1,7 +1,9 @@
 {
+    "caution": "You should not commit this file to git repository for real-world apps. This file may have sensitive info, like passwords, etc.",
     "name": "my-app",
     "datasource": {
         "url": "mongodb://127.0.0.1:27017/default",
-        "password": "dummy-default"
-    }
+        "password": "dummy-default: MONGODB doesn't need any password"
+    },
+    "privateKey": "This value is not used, app picks privateKey value from custom-environment-variables.json file."
 }
