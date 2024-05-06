@@ -34,6 +34,9 @@ router.post('/', async (req, res) => {
 
     try {
         const savedUser = await user.save()
+        //You get tokens in two places, 
+         //- when you create user, you get token in response headers
+         //- You can also get token by sending a post request to /api/auth
         const token = user.generateAuthToken();
         res.header('x-auth-token',token).send(lodash.pick(savedUser, ['_id', 'name', 'email','isAdmin']))
     } catch (err) {

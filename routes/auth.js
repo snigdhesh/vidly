@@ -20,6 +20,9 @@ router.get('/', async (req, res) => {
 
 
 //token generation endpoint
+//You get tokens in two places, 
+         //- when you create user, you get token in response headers
+         //- You can also get token by sending a post request to /api/auth
 router.post('/', async (req, res) => {
     const { error } = validate(req.body)
     if (error) return res.status(400).send(error.details[0].message)
