@@ -3,18 +3,15 @@ const express = require('express')
 const router = express.Router();
 const auth = require('../middleware/auth') //This returns a function
 const admin = require('../middleware/admin') //This returns a function
-const tryCatchMiddleWare = require('../middleware/globalTryCatch') //This returns a function
 
 
 
-//Get list of genre objects
-const getGenres = async (req, res) => {
+
+//Get all genre objects
+router.get('/', async (req, res) => {
     const genres = await Genre.find().sort('name');
     res.send(genres)
-}
-//We are just passing 'getGenres' function reference, to tryCatchMiddleWare();
-//router expects function as second parameter. So, tryCatchMiddleWare() returns a function.
-router.get('/', tryCatchMiddleWare(getGenres)) 
+}) 
 
 
 //Add a genre object
