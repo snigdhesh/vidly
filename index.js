@@ -13,6 +13,8 @@ const rentals = require('./routes/rentals') //This returns an object
 const users = require('./routes/users') //This returns an object
 const auth = require('./routes/auth') //This returns an object
 
+const globalErrorHandler = require('./middleware/error') //This returns a function
+
 if(!config.get('privateKey')) { //This is a private key that is used to sign the token. This is stored in the config file
     console.error('FATAL ERROR: Private key is not set');
     process.exit(1); // 0 indicates success, anything but 0 indicates failure.
@@ -36,6 +38,9 @@ app.use('/api/rentals', rentals) //This is a middleware that uses the rentals ro
 app.use('/api/users', users) //This is a middleware that uses the users route
 app.use('/api/auth', auth) //This is a middleware that uses the auth route
 app.use('/', home) //This is a middleware that uses the home route
+
+//Global exception handling should be done after all middleware and routes are set up.
+app.use(globalErrorHandler) //This is a middleware that uses the error handling middleware
 
 const port = process.env.PORT || 3000
 //You can set env variable on WINDOWS, like shown below

@@ -3,19 +3,22 @@ const express = require('express')
 const router = express.Router();
 const auth = require('../middleware/auth') //This returns a function
 const admin = require('../middleware/admin') //This returns a function
-
+const tryCatchMiddleWare = require('../middleware/globalTryCatch') //This returns a function
 
 
 
 //Get list of genre objects
-router.get('/', async (req, res) => {
+const getGenres = async (req, res) => {
     const genres = await Genre.find().sort('name');
     res.send(genres)
-})
+}
+//We are just passing 'getGenres' function reference, to tryCatchMiddleWare();
+//router expects function as second parameter. So, tryCatchMiddleWare() returns a function.
+router.get('/', tryCatchMiddleWare(getGenres)) 
 
 
 //Add a genre object
-router.post('/',auth, async (req, res) => {
+router.post('/', auth, async (req, res) => {
     const { error } = validate(req.body) //This returns an object
     if (error) return res.status(400).send(error.details[0].message)
 
@@ -42,7 +45,7 @@ router.put('/:id', async (req, res) => {
 
 //Delete a genre object
 //We apply two middlewares here. auth and admin. And they excute in the order they are applied.
-router.delete('/:id',[auth, admin], async (req, res) => {
+router.delete('/:id', [auth, admin], async (req, res) => {
 
     const genre = await Genre.findByIdAndDelete(req.params.id)
     if (!genre) return res.status(404).send('The genre with the given ID was not found.')
