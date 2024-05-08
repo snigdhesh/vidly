@@ -14,6 +14,7 @@ Node.js application
 | **npm i bcrypt**                  | To encrypt password to save to database                                                   |
 | **npm i jsonwebtoken**            | To generate json web tokens                                                               |
 | **npm i express-async-errors**    | To handle excpetions globaly                                                              |
+| **npm i winston**                 | Popular logging library                                                                   |
 
 
 skip() method for pagination in mongo database

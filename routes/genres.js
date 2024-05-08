@@ -3,12 +3,17 @@ const express = require('express')
 const router = express.Router();
 const auth = require('../middleware/auth') //This returns a function
 const admin = require('../middleware/admin') //This returns a function
+const winston = require('winston')
 
-
-
+//We add file transport to winston. This will log all errors to a file called 'logfile.log'
+winston.add(new winston.transports.File({ filename: 'logfile.log' }));
+//We add console transport to winston. This will log all errors to the console
+winston.add(new winston.transports.Console({ colorize: true, prettyPrint: true }));
 
 //Get all genre objects
 router.get('/', async (req, res) => {
+    //This is error is throw on purpose to test 'winston' logging
+    throw new Error('Could not get the genres')
     const genres = await Genre.find().sort('name');
     res.send(genres)
 }) 
