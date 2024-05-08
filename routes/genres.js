@@ -7,8 +7,6 @@ const admin = require('../middleware/admin') //This returns a function
 
 //Get all genre objects
 router.get('/', async (req, res) => {
-    //This is error is throw on purpose to test 'winston' logging
-    throw new Error('Could not get the genres')
     const genres = await Genre.find().sort('name');
     res.send(genres)
 }) 

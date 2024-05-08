@@ -6,7 +6,7 @@ const winston = require('winston')
 
 const errorHandler =  (err, req, res, next) => { //This is an error handling middleware
     //To log errors we use winston.error()
-    //Similary
+    //Similary This is a sequence of logging levels, starting with error and ending with silly
     //winston.warn()
     //winston.info()
     //winston.verbose()

@@ -16,12 +16,23 @@ const auth = require('./routes/auth') //This returns an object
 
 const globalErrorHandler = require('./middleware/error') //This returns a function
 
+//process.on with catch any mentioned event.
+//We mentioned a default event called 'uncaughtException'. This uncaughtException event is emitted when an unhandled exception occurs in our app.
+process.on('uncaughtException', (ex) => { //This is a global exception handler. It is used to catch any uncaught exceptions that occur in the application.
+    console.log('WE GOT AN UNCAUGHT EXCEPTION')
+    winston.error(ex.message, ex) //This logs the error to the logfile.log file
+
+    //Note: Do not exit the process like below. This will not wait for logs to be written to the file.
+    //process.exit(1) // 0 indicates success, anything but 0 indicates failure.
+})
+
+
 //Import winston module, to log errors to a file/console.
 const winston = require('winston')
 //Import winston-mongodb module, to log errors to a mongodb database.
 require('winston-mongodb') //We don't need to store it to a const, as we already have winston, it can take care of it.
 //We add file transport to winston. This will log all errors to a file called 'logfile.log'
-winston.add(new winston.transports.File({ filename: 'logfile.log' }));
+winston.add(new winston.transports.File({filename: 'logfile.log'}));
 //We add console transport to winston. This will log all errors to the console
 winston.add(new winston.transports.Console({ colorize: true, prettyPrint: true }));
 //We add mongodb transport to winston. This will log all errors to a mongodb database
@@ -31,7 +42,8 @@ winston.add(new winston.transports.MongoDB({
     level: 'error'
  })); //Without format.metadata() mongodb object will have not error stack trace. (This is optional)
 
-
+ //This error is thrown on purpose to test uncaught exception handling piece of code we wrote above.
+throw new Error('Something failed during startup') //This is an uncaught exception. This will be caught by the global exception handler.
 
 if(!config.get('privateKey')) { //This is a private key that is used to sign the token. This is stored in the config file
     console.error('FATAL ERROR: Private key is not set');
@@ -59,8 +71,10 @@ app.use('/', home) //This is a middleware that uses the home route
 //Global exception handling should be done after all middleware and routes are set up.
 app.use(globalErrorHandler) //globalErrorHandler will catch any error that is thrown before this line.
 
+
 const port = process.env.PORT || 3000
 //You can set env variable on WINDOWS, like shown below
 //set PORT=5000
 
 app.listen(port, () => { console.log(`listening to port ${port}`) })
+
