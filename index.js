@@ -16,6 +16,22 @@ const auth = require('./routes/auth') //This returns an object
 
 const globalErrorHandler = require('./middleware/error') //This returns a function
 
+//Import winston module, to log errors to a file/console.
+const winston = require('winston')
+//Import winston-mongodb module, to log errors to a mongodb database.
+require('winston-mongodb') //We don't need to store it to a const, as we already have winston, it can take care of it.
+//We add file transport to winston. This will log all errors to a file called 'logfile.log'
+winston.add(new winston.transports.File({ filename: 'logfile.log' }));
+//We add console transport to winston. This will log all errors to the console
+winston.add(new winston.transports.Console({ colorize: true, prettyPrint: true }));
+//We add mongodb transport to winston. This will log all errors to a mongodb database
+winston.add(new winston.transports.MongoDB({ 
+    db: config.get('datasource.url'),
+    format: winston.format.metadata(),
+    level: 'error'
+ })); //Without format.metadata() mongodb object will have not error stack trace. (This is optional)
+
+
 
 if(!config.get('privateKey')) { //This is a private key that is used to sign the token. This is stored in the config file
     console.error('FATAL ERROR: Private key is not set');

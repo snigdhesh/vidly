@@ -15,6 +15,7 @@ Node.js application
 | **npm i jsonwebtoken**            | To generate json web tokens                                                               |
 | **npm i express-async-errors**    | To handle excpetions globaly                                                              |
 | **npm i winston**                 | Popular logging library                                                                   |
+| **npm i winston-mongodb**         | Logging library to add logs to mongodb                                                    |
 
 
 skip() method for pagination in mongo database
