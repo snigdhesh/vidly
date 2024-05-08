@@ -16,17 +16,6 @@ const auth = require('./routes/auth') //This returns an object
 
 const globalErrorHandler = require('./middleware/error') //This returns a function
 
-//process.on with catch any mentioned event.
-//We mentioned a default event called 'uncaughtException'. This uncaughtException event is emitted when an unhandled exception occurs in our app.
-process.on('uncaughtException', (ex) => { //This is a global exception handler. It is used to catch any uncaught exceptions that occur in the application.
-    console.log('WE GOT AN UNCAUGHT EXCEPTION')
-    winston.error(ex.message, ex) //This logs the error to the logfile.log file
-
-    //Note: Do not exit the process like below. This will not wait for logs to be written to the file.
-    //process.exit(1) // 0 indicates success, anything but 0 indicates failure.
-})
-
-
 //Import winston module, to log errors to a file/console.
 const winston = require('winston')
 //Import winston-mongodb module, to log errors to a mongodb database.
@@ -41,6 +30,8 @@ winston.add(new winston.transports.MongoDB({
     format: winston.format.metadata(),
     level: 'error'
  })); //Without format.metadata() mongodb object will have not error stack trace. (This is optional)
+//We can use new log file, to log all uncaught exceptions. This will log all uncaught exceptions to a file called 'uncaughtExceptions.log' 
+winston.exceptions.handle(new winston.transports.File({filename: 'uncaughtExceptions.log'}))
 
  //This error is thrown on purpose to test uncaught exception handling piece of code we wrote above.
 throw new Error('Something failed during startup') //This is an uncaught exception. This will be caught by the global exception handler.
