@@ -18,8 +18,9 @@ Node.js application
 | **npm i winston-mongodb**         | Logging library to add logs to mongodb                                                    |
 
 
-skip() method for pagination in mongo database
-count() to get total could of matching criteria from mongo database
+## Nuggets
+- `skip()` method for pagination in mongo database.
+- `count()` to get total count of matching criteria from mongo database.
 
 ## Entity relations
 

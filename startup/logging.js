@@ -1,5 +1,5 @@
-//We need to load this module, when application starts. So this should be declared first.
-//This module is responsible for catching uncaught exceptions and unhandled promise rejections.
+//We need to load this module, when application starts.
+//This module is responsible for global exception handling. So this should be declared last.
 require('express-async-errors')
 
 //Import winston module, to log errors to a file/console.
