@@ -1,4 +1,5 @@
 
+const winston = require('winston');
 const express = require('express') //This returns a function
 const app = express() //This returns an object. This should be a single instance for entire application
 
@@ -18,5 +19,5 @@ const port = process.env.PORT || 3000
 //You can set env variable on WINDOWS, like shown below
 //set PORT=5000
 
-app.listen(port, () => { console.log(`listening to port ${port}...`) })
+app.listen(port, () => { winston.info(`listening to port ${port}...`) })
 
