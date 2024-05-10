@@ -2,11 +2,13 @@ require('express-async-errors') //We need to load this module, when application 
 const express = require('express') //This returns a function
 const app = express() //This returns an object. This should be a single instance for entire application
 
-const database = require('mongoose') //This returns an object
+
 const config = require('config') //This returns an object
 
-//Routes
+//Routes module
 require('./startup/routes')(app)
+//Database module
+require('./startup/db')();
 
 //Import winston module, to log errors to a file/console.
 const winston = require('winston')
@@ -32,11 +34,6 @@ if(!config.get('privateKey')) { //This is a private key that is used to sign the
     process.exit(1); // 0 indicates success, anything but 0 indicates failure.
 } 
 
-
-//connect to database when application starts
-database.connect(config.get('datasource.url'))
-    .then(() => console.log('Connected to MongoDB...'))
-    .catch(err => console.error('Could not connect to MongoDB...', err))
 
 
 
