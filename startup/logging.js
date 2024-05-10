@@ -27,7 +27,10 @@ const logging = () => {
     })); //Without format.metadata() mongodb object will have not error stack trace. (This is optional)
 
     //We can use new log file, to log all uncaught exceptions. This will log all uncaught exceptions to a file called 'uncaughtExceptions.log' 
-    winston.exceptions.handle(new winston.transports.File({ filename: 'uncaughtExceptions.log' }))
+    winston.exceptions.handle(
+        new winston.transports.Console(),
+        new winston.transports.File({ filename: 'uncaughtExceptions.log' })
+    )
 }
 
 module.exports = logging
