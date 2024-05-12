@@ -37,6 +37,17 @@ describe('/api/genres',()=> {
         })
     })
 
+    //sub test suite
+    describe('GET /:id', () => {
+        it('should return a genre if valid id is passed', () => {
+            const genre = new Genre({name: 'Genre1'})
+            await genre.save();
+
+            const res = request(server).get('/api/genres/' + genre._id);
+            expect(res.status).toBe(200);
+            exprect(res.body).toHaveProperty('name', genre.name); //We are expecting a property 'name' with value 'Genre1'
+        })
+    })
 
 
 })
