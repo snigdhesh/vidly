@@ -1,7 +1,8 @@
 const request = require('supertest') //This module returns a function
 const { Genre, validate } = require('../../models/genre');
 const winston = require('winston');
-const { default: mongoose } = require('mongoose');
+const {User} = require('../../models/user')
+
 //load server from index.js
 let server;
 
@@ -66,6 +67,29 @@ describe('/api/genres', () => {
         it('should return 401 if client is not logged it', async() => {
             const res = await request(server).post('/api/genres').send({name: "Genre1"});
             expect(res.status).toBe(401)
+        })
+
+        it('should return 400, if genre is invalid (less than 3 characters)',async ()=>{
+            const token = new User().generateAuthToken();
+            const res = await request(server)
+                .post('/api/genres')
+                .set('x-auth-token', token)
+                .send({name: "G"});
+            
+            expect(res.status).toBe(400);
+        });
+
+        it('should return 400, if genre more than 50 characters',async ()=>{
+
+            const name = new Array(52).join('a') //You join all 52 empty elements with 'a'
+
+            const token = new User().generateAuthToken();
+            const res = await request(server)
+                .post('/api/genres')
+                .set('x-auth-token', token)
+                .send({name: name});
+            
+            expect(res.status).toBe(400);
         })
     })
 
