@@ -16,6 +16,7 @@ Node.js application
 | **npm i express-async-errors**    | To handle excpetions globaly                                                              |
 | **npm i winston**                 | Popular logging library                                                                   |
 | **npm i winston-mongodb**         | Logging library to add logs to mongodb                                                    |
+| **npm i jest --save-dev**         | Testing framework                                                                         |
 
 
 ## Nuggets
@@ -24,38 +25,63 @@ Node.js application
 
 ## Entity relations
 
-**Approach1:** Using references (Normalization)  
+<details>
+    <summary> Approach1 : Using references (Normalization)   </summary>
 
 `Benefit:` Single place to define author, and we refer it everywhere  
 `Limitation:` We need to query for author and also course  
-```
-let author = { id: 1, name: 'John' }
-let course = { author: 1 } //It works, but mongo db doesn't throw an error, if we give wrong Id. 
-```
-**Approach2:** Using embedded documents (Denormalization)  
+
+    let author = { id: 1, name: 'John' }
+    let course = { author: 1 } //It works, but mongo db doesn't throw an error, if we give wrong Id. 
+</details>
+
+
+
+
+<details>
+    <summary>Approach2: Using embedded documents (Denormalization)</summary>
 
 `Benefit:` Good performance, cause we can do only one query to get course and author.  
 `Limitation:` We are not reffering author, rather we are creating author directly. We also need to modify in
 //many places.
 
-```
-let course = {
-    author: { name: 'John' }
-}
-```
+    let course = {
+        author: { name: 'John' }
+    }
+</details>
 
-**Approach3:** Hybrid approach  
+
+
+<details>
+    <summary>Approach3: Hybrid approach</summary>
+
 `Note:` This approach is mixture of above two approaches
 
-```
-let author = {
-    name: 'John'
-    //50 other props
-}
+    let author = {
+        name: 'John'
+        //50 other props
+    }
 
-let course = {
-    author: { id: 'reference to author object', name: 'John'}
-}
-```
+    let course = {
+        author: { id: 'reference to author object', name: 'John'}
+    }
+</details>
 
 **Note:** Pick right approach, there is nothing right or wrong here.
+
+
+## Testing
+
+We use `jest --watchAll --verbose` command
+
+**package.json**
+
+    {
+        "scripts":{
+            "test": "jest --watchAll --verbose"
+        }
+    }
+
+where
+  - `--watchAll` can auto run test cases, everytime we make a change
+  - `--verbose` can output extra info in the console, if something goes wrong we can use this info to troubleshoot.

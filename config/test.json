@@ -1,3 +1,7 @@
 {   
-    "privateKey": "123"
+    "privateKey": "123",
+    "datasource": {
+        "url": "mongodb://127.0.0.1:27017/vidly_tests"
+    }
+
 }
