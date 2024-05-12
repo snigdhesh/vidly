@@ -61,6 +61,14 @@ describe('/api/genres', () => {
         })
     })
 
+    //sub test suite
+    describe('POST /genres', ()=>{
+        it('should return 401 if client is not logged it', async() => {
+            const res = await request(server).post('/api/genres').send({name: "Genre1"});
+            expect(res.status).toBe(401)
+        })
+    })
+
 
 })
 
