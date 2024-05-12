@@ -17,6 +17,7 @@ Node.js application
 | **npm i winston**                 | Popular logging library                                                                   |
 | **npm i winston-mongodb**         | Logging library to add logs to mongodb                                                    |
 | **npm i jest --save-dev**         | Testing framework                                                                         |
+| **npm i supertest --save-dev**    | A library to send http requests via code - for integration testing                        |
 
 
 ## Nuggets

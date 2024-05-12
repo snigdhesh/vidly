@@ -19,5 +19,8 @@ const port = process.env.PORT || 3000
 //You can set env variable on WINDOWS, like shown below
 //set PORT=5000
 
-app.listen(port, () => { winston.info(`listening to port ${port}...`) })
+const server = app.listen(port, () => { winston.info(`listening to port ${port}...`) })
+
+//We are exporting server object, so that we can use it in integration tests. Else there is no need to export it.
+module.exports = server;
 
