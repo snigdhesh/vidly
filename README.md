@@ -73,16 +73,18 @@ Node.js application
 
 ## Testing
 
-We use `jest --watchAll --verbose` command
+We use `jest --watchAll --verbose --coverage` command
 
 **package.json**
 
     {
         "scripts":{
-            "test": "jest --watchAll --verbose"
+            "test": "jest --watchAll --verbose --coverage"
         }
     }
 
 where
   - `--watchAll` can auto run test cases, everytime we make a change
   - `--verbose` can output extra info in the console, if something goes wrong we can use this info to troubleshoot.
+  - `--coverage` will give code coverage report in command line (or) html file can be found under   
+    `root > coverage > Icov-report > index.html`

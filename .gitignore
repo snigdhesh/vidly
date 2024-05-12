@@ -135,3 +135,6 @@ dist
 
 #log files
 *.log
+
+#code-coverage
+coverage/
