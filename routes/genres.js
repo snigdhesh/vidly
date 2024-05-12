@@ -3,13 +3,14 @@ const express = require('express')
 const router = express.Router();
 const auth = require('../middleware/auth') //This returns a function
 const admin = require('../middleware/admin') //This returns a function
+const validateObjectId = require('../middleware/validateObjectId')
 
 
 //Get all genre objects
 router.get('/', async (req, res) => {
     const genres = await Genre.find().sort('name');
     res.send(genres)
-}) 
+})
 
 
 //Add a genre object
@@ -50,7 +51,8 @@ router.delete('/:id', [auth, admin], async (req, res) => {
 
 
 //Get single genre object
-router.get('/:id', async (req, res) => {
+router.get('/:id',validateObjectId, async (req, res) => {
+
     const genres = await Genre.findById(req.params.id);
     res.send(genres)
 })

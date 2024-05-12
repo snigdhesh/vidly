@@ -1,6 +1,7 @@
 const request = require('supertest') //This module returns a function
 const { Genre, validate } = require('../../models/genre');
-const winston = require('winston')
+const winston = require('winston');
+const { default: mongoose } = require('mongoose');
 //load server from index.js
 let server;
 
@@ -50,6 +51,13 @@ describe('/api/genres', () => {
             expect(res.status).toBe(200);
             expect(res.body).toHaveProperty('name',genre.name); //We are expecting a property 'name' with value 'Genre1'
 
+        });
+
+
+        it('should return 404 if invalid id is passed', async ()=> {
+            
+            const res = await request(server).get('/api/genres/1');
+            expect(res.status).toBe(404)
         })
     })
 
