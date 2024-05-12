@@ -1,32 +1,34 @@
 const request = require('supertest') //This module returns a function
-const {Genre, validate} = require('../../models/genre');
+const { Genre, validate } = require('../../models/genre');
 const winston = require('winston')
 //load server from index.js
 let server;
 
 //Test suite
-describe('/api/genres',()=> {
-    
+describe('/api/genres', () => {
+
     //Note: Load server before test executions and close it after test executions
-    beforeEach(()=>{ server = require('../../index') })
-    afterEach(async()=>{ 
-        server.close() ;
+    beforeEach(() => {
+        server = require('../../index')
+    })
+    afterEach(async () => {
+        server.close();
         winston.info('Server closed')
         await Genre.deleteMany({});
     })
 
     //sub test suite
-    describe('/GET',()=>{
+    describe('/GET', () => {
 
         //Test case 1
         it('should return all genres', async () => {
-        
+
             //With this command, we can add multiple documents to mongoDB at once.
             //But this will keep adding these documents, whenever test case runs, that happens every time we make a change, due to 'jest --watchAll'
             //So cleanup this collection in afterEach() method
             await Genre.collection.insertMany([
-                { name: 'genre1'},
-                { name: 'genre2'}
+                { name: 'genre1' },
+                { name: 'genre2' }
             ]);
 
             const res = await request(server).get('/api/genres');
@@ -39,13 +41,15 @@ describe('/api/genres',()=> {
 
     //sub test suite
     describe('GET /:id', () => {
-        it('should return a genre if valid id is passed', () => {
-            const genre = new Genre({name: 'Genre1'})
+        it('should return a genre if valid id is passed', async () => {
+            const genre = new Genre({ name: 'Genre1' })
             await genre.save();
 
-            const res = request(server).get('/api/genres/' + genre._id);
+            const res = await request(server).get(`/api/genres/${genre._id}`);
+
             expect(res.status).toBe(200);
-            exprect(res.body).toHaveProperty('name', genre.name); //We are expecting a property 'name' with value 'Genre1'
+            expect(res.body).toHaveProperty('name',genre.name); //We are expecting a property 'name' with value 'Genre1'
+
         })
     })
 
