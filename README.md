@@ -73,13 +73,13 @@ Node.js application
 
 ## Testing
 
-We use `jest --watchAll --verbose --coverage` command
+We use `jest --watchAll --verbose --coverage --runInBand` command
 
 **package.json**
 
     {
         "scripts":{
-            "test": "jest --watchAll --verbose --coverage"
+            "test": "jest --watchAll --verbose --coverage --runInBand"
         }
     }
 
@@ -88,3 +88,24 @@ where
   - `--verbose` can output extra info in the console, if something goes wrong we can use this info to troubleshoot.
   - `--coverage` will give code coverage report in command line (or) html file can be found under   
     `root > coverage > Icov-report > index.html`
+  - `--runInBand` will allow `Jest` to execute test cases one by one.
+
+## Issues & Solutions: Fixing concurrent test execution issue
+**Issue1:** Jest & supertest testing packages run test cases in concurrently (In parallel) by default.  
+**Reason:** Jest does this to improve performance.  
+**Problem:** Say, if we create an object in `test-case-1` and use it in `test-case-2` - This fails cause `test-case-2` might execute first.  
+**Solution:** Mention `Jest` to execute test cases in sequence with command `--runInBand`, under **package.json > scripts > test**
+    
+    {
+        "scripts":{
+            "test": "jest --watchAll --verbose --coverage --runInBand" //runInBand will allow Jest to execute test cases one by one.
+        }
+    }
+
+**Issue2:** During parallel execution, `Jest` & `supertest` testing packages assign random ports for every test case, while running test cases.  
+**Problem:** If we explicitly mention any port like `3000`, two different test-cases execute at same time, trying to start server on port `3000`, which will result in error.  
+**Solution:** Assign explicit PORT only if environment is not `test` like show below
+    
+    const port = process.env.NODE_ENV != 'test' && process.env.PORT || 3000
+
+    app.listen(port,()=>console.log(`listening on port ${port}...`))
