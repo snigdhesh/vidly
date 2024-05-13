@@ -14,9 +14,9 @@ describe('/api/genres', () => {
         server = require('../../index')
     })
     afterEach(async () => {
+        await Genre.deleteMany({});
         server.close();
         winston.info('Server closed')
-        await Genre.deleteMany({});
     })
 
     //sub test suite
