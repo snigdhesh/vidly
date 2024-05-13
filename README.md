@@ -91,7 +91,7 @@ where
   - `--runInBand` will allow `Jest` to execute test cases one by one.
 
 ## Issues & Solutions: Fixing concurrent test execution issue
-**Issue1:** Jest & supertest testing packages run test cases in concurrently (In parallel) by default.  
+**Issue1:** Jest & supertest testing packages run test cases concurrently (in parallel) by default.  
 **Reason:** Jest does this to improve performance.  
 **Problem:** Say, if we create an object in `test-case-1` and use it in `test-case-2` - This fails cause `test-case-2` might execute first.  
 **Solution:** Mention `Jest` to execute test cases in sequence with command `--runInBand`, under **package.json > scripts > test**
@@ -101,6 +101,8 @@ where
             "test": "jest --watchAll --verbose --coverage --runInBand" //runInBand will allow Jest to execute test cases one by one.
         }
     }
+
+**Note:** Fixing anyone issue from these two will fix the other.
 
 **Issue2:** During parallel execution, `Jest` & `supertest` testing packages assign random ports for every test case, while running test cases.  
 **Problem:** If we explicitly mention any port like `3000`, two different test-cases execute at same time, trying to start server on port `3000`, which will result in error.  
