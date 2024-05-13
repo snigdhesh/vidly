@@ -6,6 +6,7 @@ const movies = require('../routes/movies') //This returns an object
 const rentals = require('../routes/rentals') //This returns an object
 const users = require('../routes/users') //This returns an object
 const auth = require('../routes/auth') //This returns an object
+const returns = require('../routes/returns') // This returns a router object
 const globalErrorHandler = require('../middleware/error') //This returns a function
 
 const routes = (app) => {
@@ -18,6 +19,7 @@ const routes = (app) => {
     app.use('/api/rentals', rentals) //This is a middleware that uses the rentals route
     app.use('/api/users', users) //This is a middleware that uses the users route
     app.use('/api/auth', auth) //This is a middleware that uses the auth route
+    app.use('/api/returns', returns) //This is a middleware that uses 'returns' route
     app.use('/', home) //This is a middleware that uses the home route
     
     //Global exception handling should be done after all middleware and routes are set up.

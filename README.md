@@ -102,7 +102,9 @@ where
         }
     }
 
-**Note:** Fixing anyone issue from these two will fix the other.
+**Note:** 
+- Fixing anyone issue from these two will fix the other. But try to write independent test-cases, so jest can run them in parallel for faster executions and better peformance.
+- Use `netstat -aon | findstr 3000` to see processing running on port 3000. If you see `0` as PID. Stop the app and wait for a while, to clean all these running processes on port 3000. Then you can re-run your app again.
 
 **Issue2:** During parallel execution, `Jest` & `supertest` testing packages assign random ports for every test case, while running test cases.  
 **Problem:** If we explicitly mention any port like `3000`, two different test-cases execute at same time, trying to start server on port `3000`, which will result in error.  
@@ -111,3 +113,10 @@ where
     const port = process.env.NODE_ENV != 'test' && process.env.PORT || 3000
 
     app.listen(port,()=>console.log(`listening on port ${port}...`))
+
+**Solution by Mosh** : You need to `await` when you do server.close(). That's all you need to do, you don't have to add any command/port logic. If this works in your project, please follow this. If not try above solutions.
+
+    afterEach(async() => {
+        await Genre.deleteMany({});
+        await server.close();
+    })

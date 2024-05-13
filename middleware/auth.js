@@ -11,7 +11,6 @@ const auth = (req,res,next) => {
         req.user = decoded;
         next(); //This is a reference to the next middleware function in the request flow
     } catch (ex) {
-        console.log(ex)
         res.status(400).send('Invalid token');
     }
 }
