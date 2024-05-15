@@ -19,6 +19,7 @@ router.post('/', async (req, res) => {
     })
 
     if(!rental) res.status(404).send('Bad Request')
+    if(rental.dateReturned) res.send(400).send('Rental already processed')
 
     res.status(401).send('Unauthorized')
 });
