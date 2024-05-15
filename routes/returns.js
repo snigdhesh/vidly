@@ -8,7 +8,7 @@ router.get('/', async (req, res) => {
     res.send("returns");
 });
 
-router.post('/', async (req, res) => {
+router.post('/',auth, async (req, res) => {
     
     if(!req.body.customerId) res.status(400).send('Missing customerId');
     if(!req.body.movieId) res.status(400).send('Missing movieId');
@@ -21,7 +21,7 @@ router.post('/', async (req, res) => {
     if(!rental) res.status(404).send('Bad Request')
     if(rental.dateReturned) res.send(400).send('Rental already processed')
 
-    res.status(401).send('Unauthorized')
+    return res.status(200).send();
 });
 
 module.exports = router;
