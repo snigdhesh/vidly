@@ -31,6 +31,7 @@ describe('/api/returns', () => {
         })
         await rental.save();
     })
+
     afterEach(async () => {
         //Delete all records in Rental collection after test-case is executed.
         await Rental.deleteMany({})
@@ -43,16 +44,25 @@ describe('/api/returns', () => {
         expect(res.status).toBe(401)
     })
 
-    it('should return 400 if customerId is not provided', async () => {
-        customerId=''; //or you can add it object and delete a property in object like "delete payload.customerId"
-        const res = await exec()
-        expect(res.status).toBe(400)
-    })
-
+    
     it('should return 400 if movieId is not provided', async () => {
-        movieId='';
+        movieId=null;
         const res = await exec();
         expect(res.status).toBe(400)
     })
 
-})  
+
+    it('should return 400 if customerId is not provided', async () => {
+        customerId=null; //or you can add it object and delete a property in object like "delete payload.customerId"
+        const res = await exec();
+        expect(res.status).toBe(400)
+    })
+
+    
+    it('should return 404 if rental not found for customerId and movieId', async () => {
+        await Rental.deleteMany({})
+        const res = await exec();
+        expect(res.status).toBe(404)
+    })
+
+})
