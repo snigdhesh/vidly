@@ -143,6 +143,8 @@ where
 - You can check logs with command `heroku logs`
 - You can set env variables using `heroku config: set NODE_ENV=production` command for example
 - You can run `heroku config` to see all env variables we have set.
+
+## Following didn't work: Currently there is no working mongodb on heroku
 - Add 'objectrocker mongodb' addon
 - Run `heroku config:get ORMONGO_RS_URL` to get mongodb URL
 - Run `heroku addons:open ormongo` to see mongodb dashboard
