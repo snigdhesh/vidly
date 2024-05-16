@@ -11,6 +11,8 @@ require('./startup/routes')(app);
 require('./startup/db')();
 //Configuration module: To check JWT private key configured or not within this application
 require('./startup/configCheck')();
+//Config to get this app ready for prod deployments
+require('./startup/prodMiddleWare')(app);
 
 
 

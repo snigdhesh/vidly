@@ -4,17 +4,22 @@
   "description": "Node.js application",
   "main": "index.js",
   "scripts": {
-    "start": "nodemon index.js",
+    "start": "node index.js",
     "test": "jest --watchAll --verbose --coverage --runInBand"
+  },
+  "engines": {
+    "node": "18.12.1"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "dependencies": {
     "bcrypt": "^5.1.1",
+    "compression": "^1.7.4",
     "config": "^3.3.11",
     "express": "^4.19.2",
     "express-async-errors": "^3.1.1",
+    "helmet": "^7.1.0",
     "joi": "^17.13.0",
     "joi-objectid": "^4.0.2",
     "jsonwebtoken": "^9.0.2",

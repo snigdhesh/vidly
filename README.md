@@ -19,6 +19,8 @@ Node.js application
 | **npm i jest --save-dev**         | Testing framework                                                                         |
 | **npm i supertest --save-dev**    | A library to send http requests via code - for integration testing                        |
 | **npm i moment**                  | A library to work with dates and times                                                    |
+| **npm i helmet**                  | A middleware package that protects your app from web vulnerabilities                      |
+| **npm i compression**             | A library used to compress the http response, that we sent to client                      |
 
 
 ## Nuggets
