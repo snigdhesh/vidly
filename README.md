@@ -127,6 +127,11 @@ where
 
 #### Deploy to heroku
 
+**pre-req:** Setup free plan on mongodb-atlas (cloud database) to get connection string.
+Connection String will look something like below
+
+        mongodb+srv://<your database username>:<your database password>@vidly.bfk7app.mongodb.net/?retryWrites=true&w=majority&appName=vidly
+
 - install heroku cli
 - Run `heroku create <app_name>`
 - Run `git remote -v` //Gives all remotes attached to repository
@@ -143,9 +148,4 @@ where
 - You can check logs with command `heroku logs`
 - You can set env variables using `heroku config: set NODE_ENV=production` command for example
 - You can run `heroku config` to see all env variables we have set.
-
-## Following didn't work: Currently there is no working mongodb on heroku
-- Add 'objectrocker mongodb' addon
-- Run `heroku config:get ORMONGO_RS_URL` to get mongodb URL
-- Run `heroku addons:open ormongo` to see mongodb dashboard
-- Go to `databases` tab on mongodb dashboard > create database (Here you get  mongodb connection string, username and password)
+- 
