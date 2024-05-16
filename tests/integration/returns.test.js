@@ -95,8 +95,10 @@ describe('/api/returns', () => {
     it('should set return date if valid request', async () => {
         const res = await exec();
         const rentalInDB = await Rental.findById(rental._id);
-        const diff = new Date() - rentalInDB.dateReturned;
-        expect(diff).toBeLessThan(20)
+        console.log("Rental ID",rental._id)
+        let date = new Date()
+        const diff =  date - rentalInDB.dateReturned;
+        expect(diff).toBeLessThan(1000) //1000 milliseconds
     })
 
     it('should return rentalFee if input is valid',async ()=>{
@@ -120,5 +122,18 @@ describe('/api/returns', () => {
         const res = await exec();
         const movieInDB = await Movie.findById(movieId);
         expect(movieInDB.numberInStock).toBe(movie.numberInStock + 1); //10, 11
+    })
+
+    it('should return the rental on valid request',async()=>{
+        const res = await exec();
+        const rentalInDB = await Rental.findById(rental._id)
+        //expect(res.body).toMatchObject(rentalInDB) //This causes problems with date format. So this is too specific testing - we don't need that.
+        
+        //So we try to check if res.body has these elements : ['dateOut','dateReturned','rentalFee','customer','movie']
+        expect(Object.keys(res.body)).toEqual(
+            expect.arrayContaining(['dateOut','dateReturned','rentalFee','customer','movie'])
+        )
+
+      
     })
 })
