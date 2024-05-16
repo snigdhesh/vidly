@@ -2,6 +2,7 @@ const express = require('express')
 const mongoose = require('mongoose')
 const Joi = require('joi')
 Joi.objectId = require('joi-objectid')(Joi)
+const moment = require('moment')
 
 
 //create customer schema
@@ -65,6 +66,23 @@ const rentalSchema = new mongoose.Schema({
         min: 0
     }
 })
+
+//Create a static method: lookup() in Rental class
+rentalSchema.statics.lookup = function(customerId, movieId) {
+    //this will refer the Rental class : Remember we can't use 'this' keyword in arrow functions
+    return this.findOne({
+        'customer._id': customerId,
+        'movie._id': movieId
+    })
+}
+
+//Create an instance method: return() in Rental class
+rentalSchema.methods.return = function(){
+    this.dateReturned = new Date();
+    //moment() will return current date time
+    const rentalDays = moment().diff(this.dateOut, 'days');
+    this.rentalFee = rentalDays * this.movie.dailyRentalRate;
+}
 
 //create customer class
 const Customer2 = mongoose.model('Customer2', customerSchema2)
