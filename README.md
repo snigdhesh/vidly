@@ -123,3 +123,27 @@ where
         await Genre.deleteMany({});
         await server.close();
     })
+
+
+#### Deploy to heroku
+
+- install heroku cli
+- Run `heroku create <app_name>`
+- Run `git remote -v` //Gives all remotes attached to repository
+
+    | repoName | repoURL                                      |
+    |----------|--------------------------------------------  |
+    | heroku   | https://git.heroku.com/vidly-dev.git (fetch) |
+    | heroku   | https://git.heroku.com/vidly-dev.git (push)  |
+    | origin   | git@github.com:snigdhesh/vidly.git (fetch)   |
+    | origin   | git@github.com:snigdhesh/vidly.git (push)    |
+
+
+- Run `git push <remote_repo_name> <branch_name>` **Ex:** git push heroku main
+- You can check logs with command `heroku logs`
+- You can set env variables using `heroku config: set NODE_ENV=production` command for example
+- You can run `heroku config` to see all env variables we have set.
+- Add 'objectrocker mongodb' addon
+- Run `heroku config:get ORMONGO_RS_URL` to get mongodb URL
+- Run `heroku addons:open ormongo` to see mongodb dashboard
+- Go to `databases` tab on mongodb dashboard > create database (Here you get  mongodb connection string, username and password)

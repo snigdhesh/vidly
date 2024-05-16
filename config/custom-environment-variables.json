@@ -1,6 +1,9 @@
 {
     "caution": "This file name is case sensitive.",
     "privateKey": "vidly_jwtPrivateKey",
+    "datasource": {
+        "url": "vidly_db"
+    },
     "comments_1": "vidly_jwtPrivateKey mentioned above is the env variable name, you need to set it.",
     "comments_2": "You can set env variable in windows using 'set' command, for example: set vidly_jwt=yourPrivateKey",
     "comments_3": "You can set env variable in mac using 'export' command, for example: export vidly_jwt=yourPrivateKey",

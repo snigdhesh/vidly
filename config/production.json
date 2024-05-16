@@ -3,7 +3,7 @@
     "name": "my-app",
     "datasource": {
         "url": "mongodb://127.0.0.1:27017/production",
-        "password": "dummy-default: MONGODB doesn't need any password"
+        "password": "dummy-default: MONGODB doesn't need any password in local"
     },
     "privateKey": "This value is not used, app picks privateKey value from custom-environment-variables.json file."
 }
