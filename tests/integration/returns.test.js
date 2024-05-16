@@ -2,6 +2,7 @@ const request = require('supertest')
 const { Rental } = require('../../models/rental')
 const mongoose = require('mongoose')
 const { User } = require('../../models/user')
+const moment = require('moment')
 let server;
 
 //test suite
@@ -76,5 +77,26 @@ describe('/api/returns', () => {
     it('should return 200 if valid request', async () => {
         const res = await exec();
         expect(res.status).toBe(200)
+    })
+
+    it('should set return date if valid request', async () => {
+        const res = await exec();
+        const rentalInDB = await Rental.findById(rental._id);
+        const diff = new Date() - rentalInDB.dateReturned;
+        expect(diff).toBeLessThan(20)
+    })
+
+    it('should return rentalFee if input is valid',async ()=>{
+        //moment() will give current date time
+        //dateOut is standard javascript Date format.
+        //toDate() converts Date to plain javascript object to save to db.
+        rental.dateOut = moment().add(-7, 'days').toDate(); //7 days ago
+        rental.movie.dailyRentalRate = 2;
+        await rental.save();
+
+        //Make a post call - This will set rentalFee to DB.
+        const res = await exec();
+        const rentalInDB = await Rental.findById(rental._id);
+        expect(rentalInDB.rentalFee).toBe(14);
     })
 })
