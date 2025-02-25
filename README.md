@@ -25,7 +25,7 @@ Node.js application
 
 ## Nuggets
 - `skip()` method for pagination in mongo database.
-- `count()` to get total count of matching criteria from mongo database.
+- `countDocuments()` to get total count of matching criteria from mongo database.
 
 ## Entity relations
 
