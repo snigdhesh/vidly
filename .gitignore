@@ -138,3 +138,6 @@ dist
 
 #code-coverage
 coverage/
+
+#mongo-db data
+data
